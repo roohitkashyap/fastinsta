@@ -24,6 +24,8 @@ RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd intl
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf && a2enmod rewrite
+# Fix AH00534: More than one MPM loaded
+RUN a2dismod mpm_event && a2enmod mpm_prefork
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
