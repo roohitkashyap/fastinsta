@@ -1,0 +1,17 @@
+.git
+.env
+vendor
+node_modules
+public/storage
+storage/*.key
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
+storage/logs/*
+tests
+Dockerfile
+docker-entrypoint.sh
+debug*.php
+test_*.php
+README.md
