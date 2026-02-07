@@ -1,5 +1,8 @@
 FROM php:8.2-cli
 
+# Cache bust - change this to force rebuild (Feb 7 2026 23:20)
+ARG CACHEBUST=20260207_2320
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
