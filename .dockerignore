@@ -10,8 +10,7 @@ storage/framework/testing/*
 storage/framework/views/*
 storage/logs/*
 tests
-Dockerfile
-docker-entrypoint.sh
+
 debug*.php
 test_*.php
 README.md
