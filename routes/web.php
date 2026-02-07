@@ -41,3 +41,24 @@ Route::get('/sitemap.xml', function () {
     return response()->view('sitemap.index')
         ->header('Content-Type', 'application/xml');
 })->name('sitemap');
+
+// Debug Route (Temporary)
+Route::get('/debug-env', function () {
+    try {
+        \DB::connection()->getPdo();
+        $dbStatus = "Connected to database: " . \DB::connection()->getDatabaseName();
+    } catch (\Exception $e) {
+        $dbStatus = "Database connection failed: " . $e->getMessage();
+    }
+
+    return [
+        'APP_ENV' => env('APP_ENV'),
+        'APP_DEBUG' => env('APP_DEBUG'),
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+        'DB_HOST' => env('DB_HOST'),
+        'DB_DATABASE' => env('DB_DATABASE'),
+        'DB_STATUS' => $dbStatus,
+        'PHP_VERSION' => phpversion(),
+        'SERVER_PORT' => $_SERVER['SERVER_PORT'] ?? 'unknown',
+    ];
+});
