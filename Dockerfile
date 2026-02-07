@@ -12,12 +12,13 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libicu-dev \
     curl \
     acl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath gd intl
 
 # Configure Apache DocumentRoot to public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
