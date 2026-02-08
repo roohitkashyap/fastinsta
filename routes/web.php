@@ -42,23 +42,45 @@ Route::get('/sitemap.xml', function () {
         ->header('Content-Type', 'application/xml');
 })->name('sitemap');
 
-// Debug Route (Temporary)
+// Debug Route (Temporary) - Check Python, yt-dlp, etc.
 Route::get('/debug-env', function () {
+    $results = [];
+    
+    // Database check
     try {
         \DB::connection()->getPdo();
-        $dbStatus = "Connected to database: " . \DB::connection()->getDatabaseName();
+        $results['DB_STATUS'] = "Connected: " . \DB::connection()->getDatabaseName();
     } catch (\Exception $e) {
-        $dbStatus = "Database connection failed: " . $e->getMessage();
+        $results['DB_STATUS'] = "Failed: " . $e->getMessage();
     }
-
+    
+    // Check yt-dlp
+    $ytdlpPath = file_exists('/opt/venv/bin/yt-dlp') ? '/opt/venv/bin/yt-dlp' : 'yt-dlp';
+    $ytdlpVersion = trim(shell_exec("$ytdlpPath --version 2>&1") ?? 'not found');
+    
+    // Check Python
+    $pythonPath = file_exists('/opt/venv/bin/python') ? '/opt/venv/bin/python' : 'python';
+    $pythonVersion = trim(shell_exec("$pythonPath --version 2>&1") ?? 'not found');
+    
+    // Check instaloader
+    $instaloaderCheck = trim(shell_exec("$pythonPath -c 'import instaloader; print(instaloader.__version__)' 2>&1") ?? 'not found');
+    
+    // Test yt-dlp with a known public reel
+    $testUrl = 'https://www.instagram.com/reel/CzTGAi_rDQz/';
+    $testCommand = "$ytdlpPath --dump-json \"$testUrl\" 2>&1 | head -c 500";
+    $testResult = trim(shell_exec($testCommand) ?? 'failed');
+    
     return [
         'APP_ENV' => env('APP_ENV'),
         'APP_DEBUG' => env('APP_DEBUG'),
-        'DB_CONNECTION' => env('DB_CONNECTION'),
-        'DB_HOST' => env('DB_HOST'),
-        'DB_DATABASE' => env('DB_DATABASE'),
-        'DB_STATUS' => $dbStatus,
         'PHP_VERSION' => phpversion(),
-        'SERVER_PORT' => $_SERVER['SERVER_PORT'] ?? 'unknown',
+        'PYTHON_VERSION' => $pythonVersion,
+        'PYTHON_PATH' => $pythonPath,
+        'YTDLP_PATH' => $ytdlpPath,
+        'YTDLP_VERSION' => $ytdlpVersion,
+        'INSTALOADER_VERSION' => $instaloaderCheck,
+        'DB_CONNECTION' => env('DB_CONNECTION'),
+        'DB_STATUS' => $results['DB_STATUS'],
+        'TEST_YTDLP' => substr($testResult, 0, 500),
     ];
 });
