@@ -1,0 +1,17 @@
+{
+    "APP_NAME": "FastInsta",
+    "APP_ENV": "production",
+    "APP_KEY": "base64:9NJYPSsRgM98bA6vqqDfvemjYKggElaidfM7IcxqjfI=",
+    "APP_DEBUG": "true",
+    "APP_URL": "https://fastinsta-production.up.railway.app",
+    "LOG_CHANNEL": "stderr",
+    "LOG_LEVEL": "debug",
+    "DB_CONNECTION": "sqlite",
+    "CACHE_STORE": "file",
+    "SESSION_DRIVER": "file",
+    "QUEUE_CONNECTION": "sync",
+    "FILESYSTEM_DISK": "local",
+    "BROADCAST_CONNECTION": "log",
+    "SESSION_LIFETIME": "120",
+    "PORT": "8080"
+}

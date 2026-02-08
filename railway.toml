@@ -9,6 +9,9 @@ healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5
 
-# Explicitly set the PORT environment variable
+# Explicitly set environment variables
 [envs]
 PORT = "8080"
+DB_CONNECTION = "sqlite"
+CACHE_STORE = "file"
+SESSION_DRIVER = "file"
