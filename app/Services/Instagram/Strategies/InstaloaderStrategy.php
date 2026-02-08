@@ -97,7 +97,9 @@ PYTHON;
 
             file_put_contents($scriptPath, $pythonCode);
             
-            $command = "python \"$scriptPath\" 2>&1";
+            // Use venv python if available (Docker), otherwise system python
+            $pythonPath = file_exists('/opt/venv/bin/python') ? '/opt/venv/bin/python' : 'python';
+            $command = "$pythonPath \"$scriptPath\" 2>&1";
             $output = shell_exec($command);
             
             // Clean up

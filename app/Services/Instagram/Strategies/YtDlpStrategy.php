@@ -101,10 +101,10 @@ class YtDlpStrategy implements ExtractionStrategy
             return trim($paths[0]);
         }
 
-        // Try common locations
+        // Try common locations (including Docker venv)
         $commonPaths = PHP_OS_FAMILY === 'Windows' 
             ? ['C:\\Python311\\Scripts\\yt-dlp.exe', 'C:\\Python310\\Scripts\\yt-dlp.exe', 'C:\\Python39\\Scripts\\yt-dlp.exe']
-            : ['/usr/local/bin/yt-dlp', '/usr/bin/yt-dlp', '~/.local/bin/yt-dlp'];
+            : ['/opt/venv/bin/yt-dlp', '/usr/local/bin/yt-dlp', '/usr/bin/yt-dlp', '~/.local/bin/yt-dlp'];
 
         foreach ($commonPaths as $p) {
             if (file_exists($p)) {
