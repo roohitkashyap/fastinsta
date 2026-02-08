@@ -533,7 +533,7 @@ function godLevelDownloader() {
         url: '',
         loading: false,
         error: '',
-        result: null,
+        result: { success: false, media: [], caption: '', media_type: '', media_count: 0 },
         turnstileToken: '',
         showPreview: false,
         previewMedia: null,
