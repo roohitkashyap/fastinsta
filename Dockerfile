@@ -47,8 +47,9 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Expose the PORT for Railway
-EXPOSE ${PORT:-8080}
+# Expose port 8080 (Railway will route traffic here)
+EXPOSE 8080
+ENV PORT=8080
 
 # Add entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
